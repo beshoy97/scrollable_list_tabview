@@ -16,15 +16,16 @@ const SizedBox _kSizedBoxW8 = const SizedBox(width: 8.0);
 
 class ScrollableListTabView extends StatefulWidget {
   /// Create a new [ScrollableListTabView]
-  const ScrollableListTabView(
-      {Key key,
-      this.tabs,
-      this.tabHeight = kToolbarHeight,
-      this.tabAnimationDuration = _kScrollDuration,
-      this.bodyAnimationDuration = _kScrollDuration,
-      this.tabAnimationCurve = Curves.decelerate,
-      this.bodyAnimationCurve = Curves.decelerate})
-      : assert(tabAnimationDuration != null, bodyAnimationDuration != null),
+  const ScrollableListTabView({
+    Key key,
+    this.tabs,
+    this.tabHeight = kToolbarHeight,
+    this.tabAnimationDuration = _kScrollDuration,
+    this.bodyAnimationDuration = _kScrollDuration,
+    this.tabAnimationCurve = Curves.decelerate,
+    this.bodyAnimationCurve = Curves.decelerate,
+    this.tabTitleTextStyle,
+  })  : assert(tabAnimationDuration != null, bodyAnimationDuration != null),
         assert(tabAnimationCurve != null, bodyAnimationCurve != null),
         assert(tabHeight != null),
         assert(tabs != null),
@@ -47,6 +48,9 @@ class ScrollableListTabView extends StatefulWidget {
 
   /// Animation curve used when changing index of inner [ScrollView]s.
   final Curve bodyAnimationCurve;
+
+  ///Tab Design list
+  final TextStyle tabTitleTextStyle;
 
   @override
   _ScrollableListTabViewState createState() => _ScrollableListTabViewState();
@@ -85,13 +89,17 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
                   builder: (_, i, __) {
                     var selected = index == i;
                     if (selected) {
-                      return GestureDetector(onTap: (){
-                        _onTabPressed(index);
-                      },child: tab.selectTab);
+                      return GestureDetector(
+                          onTap: () {
+                            _onTabPressed(index);
+                          },
+                          child: tab.selectTab);
                     } else {
-                      return GestureDetector(onTap: (){
-                        _onTabPressed(index);
-                      },child: tab.unSelectTab);
+                      return GestureDetector(
+                          onTap: () {
+                            _onTabPressed(index);
+                          },
+                          child: tab.unSelectTab);
                     }
                     // var borderColor = selected
                     //     ? tab.activeBackgroundColor
@@ -137,10 +145,11 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Padding(
-                  padding: _kTabMargin.add(const EdgeInsets.all(5.0)),
-                  child: _buildInnerTab(index),
-                ),
+                // Padding(
+                // padding: _kTabMargin.add(const EdgeInsets.all(5.0)),
+                // child: _buildInnerTab(index),
+                // ),
+                _buildInnerTab(index),
                 Flexible(
                   child: widget.tabs[index].body,
                 )
@@ -160,7 +169,10 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
         .copyWith(fontWeight: FontWeight.w500);
     return Builder(
       builder: (_) {
-        return tab.unSelectTab;
+        return Text(
+          tab.title,
+          style: widget.tabTitleTextStyle,
+        );
         // if (tab.icon == null) return tab.label;
         // if (!tab.showIconOnList)
         //   return DefaultTextStyle(style: textStyle, child: tab.label);

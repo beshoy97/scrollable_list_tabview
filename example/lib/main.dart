@@ -54,7 +54,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   unSelectTab: Container(
                     child: Text("aaa", style: TextStyle(color: Colors.yellow)),
-                  )),
+                  ),
+                  title: "aaa"),
               body: ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
@@ -81,7 +82,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   unSelectTab: Container(
                     child: Text("bbb", style: TextStyle(color: Colors.yellow)),
-                  )),
+                  ),
+                  title: "aaa"),
               body: ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
