@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scrollable_list_tabview/model/TabItem.dart';
 import 'list_tab.dart';
 
 class ScrollableListTab {
@@ -9,7 +10,7 @@ class ScrollableListTab {
         assert(body.shrinkWrap && body.physics is NeverScrollableScrollPhysics);
 
   /// A data class for tab properties
-  final ListTab tab;
+  final TabItem tab;
 
   /// A single widget in the scrollable tab list.
   /// Make sure that [body] is created with [ScrollView.shrinkWrap] = true

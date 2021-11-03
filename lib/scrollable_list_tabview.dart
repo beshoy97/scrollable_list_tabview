@@ -84,37 +84,46 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
                   valueListenable: _index,
                   builder: (_, i, __) {
                     var selected = index == i;
-                    var borderColor = selected
-                        ? tab.activeBackgroundColor
-                        : Theme.of(context).dividerColor;
-                    return Container(
-                      height: 32,
-                      margin: _kTabMargin,
-                      decoration: BoxDecoration(
-                          color: selected
-                              ? tab.activeBackgroundColor
-                              : tab.inactiveBackgroundColor,
-                          borderRadius: tab.borderRadius),
-                      child: OutlinedButton(
-                        style: ButtonStyle(
-                            foregroundColor: MaterialStateProperty.all(
-                                selected ? Colors.white : Colors.grey),
-                            backgroundColor: MaterialStateProperty.all(selected
-                                ? tab.activeBackgroundColor
-                                : tab.inactiveBackgroundColor),
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            side: MaterialStateProperty.all(BorderSide(
-                              width: 1,
-                              color: borderColor,
-                            )),
-                            elevation: MaterialStateProperty.all(0),
-                            shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                    borderRadius: tab.borderRadius))),
-                        child: _buildTab(index),
-                        onPressed: () => _onTabPressed(index),
-                      ),
-                    );
+                    if (selected) {
+                      return GestureDetector(onTap: (){
+                        _onTabPressed(index);
+                      },child: tab.selectTab);
+                    } else {
+                      return GestureDetector(onTap: (){
+                        _onTabPressed(index);
+                      },child: tab.unSelectTab);
+                    }
+                    // var borderColor = selected
+                    //     ? tab.activeBackgroundColor
+                    //     : Theme.of(context).dividerColor;
+                    // return Container(
+                    //   height: 32,
+                    //   margin: _kTabMargin,
+                    //   decoration: BoxDecoration(
+                    //       color: selected
+                    //           ? tab.activeBackgroundColor
+                    //           : tab.inactiveBackgroundColor,
+                    //       borderRadius: tab.borderRadius),
+                    //   child: OutlinedButton(
+                    //     style: ButtonStyle(
+                    //         foregroundColor: MaterialStateProperty.all(
+                    //             selected ? Colors.white : Colors.grey),
+                    //         backgroundColor: MaterialStateProperty.all(selected
+                    //             ? tab.activeBackgroundColor
+                    //             : tab.inactiveBackgroundColor),
+                    //         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    //         side: MaterialStateProperty.all(BorderSide(
+                    //           width: 1,
+                    //           color: borderColor,
+                    //         )),
+                    //         elevation: MaterialStateProperty.all(0),
+                    //         shape: MaterialStateProperty.all(
+                    //             RoundedRectangleBorder(
+                    //                 borderRadius: tab.borderRadius))),
+                    //     child: _buildTab(index),
+                    //     onPressed: () => _onTabPressed(index),
+                    //   ),
+                    // );
                   });
             },
           ),
@@ -151,35 +160,36 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
         .copyWith(fontWeight: FontWeight.w500);
     return Builder(
       builder: (_) {
-        if (tab.icon == null) return tab.label;
-        if (!tab.showIconOnList)
-          return DefaultTextStyle(style: textStyle, child: tab.label);
-        return DefaultTextStyle(
-          style: Theme.of(context)
-              .textTheme
-              .bodyText1
-              .copyWith(fontWeight: FontWeight.w500),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [tab.icon, _kSizedBoxW8, tab.label],
-          ),
-        );
+        return tab.unSelectTab;
+        // if (tab.icon == null) return tab.label;
+        // if (!tab.showIconOnList)
+        //   return DefaultTextStyle(style: textStyle, child: tab.label);
+        // return DefaultTextStyle(
+        //   style: Theme.of(context)
+        //       .textTheme
+        //       .bodyText1
+        //       .copyWith(fontWeight: FontWeight.w500),
+        //   child: Row(
+        //     crossAxisAlignment: CrossAxisAlignment.center,
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     mainAxisSize: MainAxisSize.min,
+        //     children: [tab.icon, _kSizedBoxW8, tab.label],
+        //   ),
+        // );
       },
     );
   }
 
-  Widget _buildTab(int index) {
-    var tab = widget.tabs[index].tab;
-    if (tab.icon == null) return tab.label;
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: [tab.icon, _kSizedBoxW8, tab.label],
-    );
-  }
+  // Widget _buildTab(int index) {
+  //   var tab = widget.tabs[index].tab;
+  //   if (tab.icon == null) return tab.label;
+  //   return Row(
+  //     crossAxisAlignment: CrossAxisAlignment.center,
+  //     mainAxisAlignment: MainAxisAlignment.center,
+  //     mainAxisSize: MainAxisSize.min,
+  //     children: [tab.icon, _kSizedBoxW8, tab.label],
+  //   );
+  // }
 
   void _onInnerViewScrolled() async {
     var positions = _bodyPositionsListener.itemPositions.value;
