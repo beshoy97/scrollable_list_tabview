@@ -5,5 +5,8 @@ class TabItem {
   Widget unSelectTab;
   String title;
 
-  TabItem({this.selectTab, this.unSelectTab, this.title});
+  TabItem(
+      {@required this.selectTab,
+      @required this.unSelectTab,
+      @required this.title});
 }
