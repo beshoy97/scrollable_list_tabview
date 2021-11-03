@@ -145,11 +145,10 @@ class _ScrollableListTabViewState extends State<ScrollableListTabView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Padding(
-                // padding: _kTabMargin.add(const EdgeInsets.all(5.0)),
-                // child: _buildInnerTab(index),
-                // ),
-                _buildInnerTab(index),
+                Padding(
+                  padding: _kTabMargin.add(const EdgeInsets.all(5.0)),
+                  child: _buildInnerTab(index),
+                ),
                 Flexible(
                   child: widget.tabs[index].body,
                 )
